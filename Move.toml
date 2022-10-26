@@ -1,0 +1,12 @@
+[package]
+name = 'suntoken'
+version = '1.0.0'
+upgrade_policy = "compatible"
+
+[dependencies.AptosFramework]
+git = 'https://github.com/aptos-labs/aptos-core.git'
+rev = 'main'
+subdir = 'aptos-move/framework/aptos-framework'
+
+[addresses]
+TokenAddress = "a6029cc8136f0029fd356bf9f22eeaa6c416ec28c20562811290097c0ed695e3"
