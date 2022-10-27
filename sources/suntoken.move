@@ -4,7 +4,7 @@ module TokenAddress::suntoken {
     use aptos_framework::coin;
     use std::string;
     use std::signer;
-    use aptos_framework::coin::{BurnCapability, MintCapability, FreezeCapability, mint, deposit, Coin, burn, transfer, balance, is_account_registered, withdraw};
+    use aptos_framework::coin::{BurnCapability, MintCapability, FreezeCapability, mint, deposit, Coin, burn, transfer, balance, is_account_registered, withdraw, register};
 
     struct SunhonxCoin {}
 
@@ -12,6 +12,7 @@ module TokenAddress::suntoken {
     const ERR_COIN_NOT_EXIST: u64 = 2;
     const ERR_ACCOUNT_NOT_REGISTERED: u64 = 3;
     const ERR_LACK_OF_BALANCE: u64 = 4;
+    const ERR_ACCOUNT_ALREADY_REGISTERED: u64 = 5;
 
 
     struct CoinCapabilities<phantom SunhonxCoin> has key {
@@ -71,7 +72,11 @@ module TokenAddress::suntoken {
         burn(coin, burn_cap)
     }
 
-
+    public entry fun register_token<SunhonxCoin>(account: &signer) {
+        let account_address = signer::address_of(account);
+        assert!(!is_account_registered<SunhonxCoin>(account_address), ERR_ACCOUNT_ALREADY_REGISTERED);
+        register<SunhonxCoin>(account)
+    }
 
 
 }
